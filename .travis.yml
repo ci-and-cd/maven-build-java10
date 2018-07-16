@@ -37,6 +37,7 @@ group: edge
 install: true
 jdk:
 #- oraclejdk8
+#- oraclejdk9
 - oraclejdk10
 language: java
 script:
