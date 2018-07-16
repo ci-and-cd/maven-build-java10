@@ -8,9 +8,12 @@ addons:
     - graphviz
     - openssl
 before_install:
-- aria2c --file-allocation=none -c -x 10 -s 10 -m 0 --console-log-level=notice --log-level=notice --summary-interval=0 -o apache-maven-3.5.3-bin.zip https://archive.apache.org/dist/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.zip && unzip -qq apache-maven-3.5.3-bin.zip
-- export M2_HOME=$PWD/apache-maven-3.5.3
+- aria2c --file-allocation=none -c -x 10 -s 10 -m 0 --console-log-level=notice --log-level=notice --summary-interval=0 -o apache-maven-3.5.4-bin.zip https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip && unzip -qq apache-maven-3.5.4-bin.zip
+- export M2_HOME=$PWD/apache-maven-3.5.4
 - export PATH=$M2_HOME/bin:$PATH
+- aria2c --file-allocation=none -c -x 10 -s 10 -m 0 --console-log-level=notice --log-level=notice --summary-interval=0 -o gradle-4.8.1-bin.zip https://downloads.gradle.org/distributions/gradle-4.8.1-bin.zip && unzip -qq gradle-4.8.1-bin.zip
+- export GRADLE_HOME=$PWD/gradle-4.8.1
+- export PATH=$GRADLE_HOME/bin:$PATH
 branches:
   only:
   #- master # do nothing on master branch
@@ -41,6 +44,7 @@ jdk:
 - oraclejdk10
 language: java
 script:
+- if [ -d /home/travis/oraclejdk10 ]; then mkdir -p /usr/lib/jvm; ln -s /home/travis/oraclejdk10 /usr/lib/jvm/java-10-oracle; fi
 # When prefixed with `travis_wait 30`, no log output until it is done.
 # see: https://github.com/travis-ci/travis-ci/issues/4190 or https://github.com/HaxeFoundation/hxcpp/issues/709
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
